@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple API Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .user-list, .user-details {
+            margin-top: 20px;
+        }
+        .user-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .user-list li {
+            background-color: #f4f4f4;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple API Client</h1>
+
+    <div class="user-list">
+        <h2>All Users</h2>
+        <button id="loadUsersBtn">Load Users</button>
+        <ul id="users"></ul>
+    </div>
+
+    <div class="user-details">
+        <h2>User Details</h2>
+        <label for="userId">Enter User ID:</label>
+        <input type="number" id="userId" placeholder="User ID">
+        <button id="getUserBtn">Get User</button>
+        <div id="userDetails"></div>
+    </div>
+
+    <script>
+        const apiUrl = '/api/users';
+
+        // Загрузка списка всех пользователей
+        document.getElementById('loadUsersBtn').addEventListener('click', () => {
+            fetch(`${apiUrl}`)
+                .then(response => response.json())
+                .then(data => {
+                    const usersList = document.getElementById('users');
+                    usersList.innerHTML = '';
+                    data.users.forEach(user => {
+                        const userItem = document.createElement('li');
+                        userItem.textContent = `ID: ${user.id}, Name: ${user.name}, Age: ${user.age}`;
+                        usersList.appendChild(userItem);
+                    });
+                })
+                .catch
